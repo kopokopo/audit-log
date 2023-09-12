@@ -7,11 +7,14 @@ class CreateAuditLogs < ActiveRecord::Migration[5.2]
       t.bigint "user_id"
       t.bigint "record_id"
       t.string "record_type"
+      t.bigint "ownable_id"
+      t.string "ownable_type"
       t.text "payload"
       t.text "request"
       t.datetime "created_at"
       t.datetime "updated_at"
       t.index %w[record_type record_id], using: :btree
+      t.index %w[owner_type owner_id], using: :btree
       t.index %w[user_id action], using: :btree
       t.index ["action"], using: :btree
     end
