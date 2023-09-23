@@ -10,8 +10,9 @@ module AuditLog
       serialize :payload, JSON
       serialize :request, JSON
 
-      belongs_to :user, class_name: AuditLog.config.user_class, required: false
       belongs_to :record, polymorphic: true, required: false
+      belongs_to :ownable, polymorphic: true, required: false
+      belongs_to :auditable, polymorphic: true, required: false
 
       validates :action, presence: true
 
@@ -24,9 +25,8 @@ module AuditLog
     end
 
     def user_name
-      return "none" if user.blank?
-
-      user.send(AuditLog.config.user_name_method)
+      return "None" if auditable.blank?
+      auditable.send(AuditLog.config.user_name_method)
     end
 
     def action_name

@@ -13,8 +13,6 @@ module AuditLog
       return @config if defined?(@config)
 
       @config = Configuration.new
-      @config.user_class = "User"
-      @config.current_user_method = "current_user"
       @config.user_name_method = "name"
       @config.table_name = "audit_logs"
       @config
@@ -27,7 +25,7 @@ module AuditLog
     # Create an audit log
     #
     # AuditLog.audit!(:edit_account, @account, payload: account_params, user: current_user)
-    def audit!(action, record = nil, payload: nil, user: nil, request: nil)
+    def audit!(action, auditable, record = nil, payload: nil, request: nil, ownable: nil)
       ActiveSupport::Notifications.instrument("audit.audit_log", action: action) do
         request_info = {}
         if request
@@ -47,7 +45,8 @@ module AuditLog
             action: action,
             record: record,
             payload: (payload || {}).to_h.deep_stringify_keys,
-            user: user,
+            auditable: auditable,
+            ownable: ownable,
             request: request_info.deep_stringify_keys
           )
         end
