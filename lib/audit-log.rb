@@ -44,10 +44,10 @@ module AuditLog
           AuditLog::Log.create!(
             action: action,
             record: record,
-            payload: (payload || {}).to_h.deep_stringify_keys,
+            payload: payload,
             auditable: auditable,
             ownable: ownable,
-            request: request_info.deep_stringify_keys
+            request: request_info
           )
         end
       end
