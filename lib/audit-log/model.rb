@@ -7,8 +7,8 @@ module AuditLog
     included do
       self.table_name = AuditLog.config.table_name
 
-      serialize :payload, JSON
-      serialize :request, JSON
+      attribute :payload, :jsonb, default: {}
+      attribute :request, :jsonb, default: {}
 
       belongs_to :record, polymorphic: true, required: false
       belongs_to :ownable, polymorphic: true, required: false
@@ -20,8 +20,8 @@ module AuditLog
     end
 
     def initialize_payload_request
-      self.payload = {} if payload.nil?
-      self.request = {} if request.nil?
+      self.payload ||= {}
+      self.request ||= {}
     end
 
     def user_name
