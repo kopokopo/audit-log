@@ -151,6 +151,9 @@ AuditLog.configure do
 end
 ```
 
+## Logging Additional Identifiers
+The gem supports logging additional identifiers from the auditable object. These are set to 'auditable_identifier_one' and 'auditable_identifier_two' by default and can be customized to any two identifiers in your app. Set them in your app's audit log configuration file to customise the identifiers.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
