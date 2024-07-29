@@ -15,6 +15,8 @@ module AuditLog
       @config = Configuration.new
       @config.user_name_method = "name"
       @config.table_name = "audit_logs"
+      @config.identifier_one_method = "auditable_identifier_one"
+      @config.identifier_two_method = "auditable_identifier_two"
       @config
     end
 
@@ -47,7 +49,9 @@ module AuditLog
             payload: payload,
             auditable: auditable,
             ownable: ownable,
-            request: request_info
+            request: request_info,
+            auditable_identifier_one: auditable.send(AuditLog.config.identifier_one_method),
+            auditable_identifier_two: auditable.send(AuditLog.config.identifier_two_method)
           )
         end
       end
