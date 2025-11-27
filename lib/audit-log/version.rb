@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module AuditLog
-  VERSION = "3.0.0"
+  VERSION = "2.4.1"
 end
